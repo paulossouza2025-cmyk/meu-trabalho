@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="MEU TRABALHO — organização pessoal da jornada">
+<link rel="manifest" href="manifest.webmanifest">
+<title>MEU TRABALHO</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--ok:#166534;--warn:#92400e}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh}
+header{background:var(--accent);color:#fff;padding:18px 16px calc(18px + env(safe-area-inset-top));position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:22px}header p{margin:4px 0 0;opacity:.72;font-size:13px}
+main{max-width:720px;margin:auto;padding:14px 14px calc(92px + env(safe-area-inset-bottom))}
+.card{background:var(--card);border-radius:17px;padding:16px;margin:12px 0;box-shadow:0 2px 12px #0000000b}
+h2{font-size:18px;margin:0 0 10px}.muted{color:var(--muted)}.big{font-size:29px;font-weight:800;line-height:1.1;margin:4px 0}.small{font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f9fafb;border:1px solid var(--line);border-radius:13px;padding:12px}
+button,.link{width:100%;border:0;border-radius:12px;padding:13px;margin:7px 0;background:var(--accent);color:#fff;font:inherit;text-align:center;text-decoration:none;display:block}
+.secondary{background:#e5e7eb;color:var(--ink)}.danger{background:#fee2e2;color:#991b1b}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));z-index:20}
+.nav button{margin:0;padding:9px 2px;background:transparent;color:#4b5563;font-size:11px}.nav button.active{background:var(--accent);color:#fff}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:11px 0}.row:last-child{border-bottom:0}
+.tag{display:inline-block;background:#e5e7eb;border-radius:999px;padding:4px 8px;font-size:12px}.work{color:var(--ok)}.off{color:var(--muted)}
+label{display:block;font-size:13px;font-weight:650;margin-top:8px}input,textarea,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:10px;margin:5px 0 8px;font:inherit;background:#fff}textarea{min-height:82px;resize:vertical}
+.empty{text-align:center;padding:20px;color:var(--muted)}.topline{display:flex;justify-content:space-between;gap:10px;align-items:center}
+@media(min-width:600px){.nav{left:50%;transform:translateX(-50%);max-width:720px;border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:18px 18px 0 0}}
+</style>
+</head>
+<body>
+<header><h1>MEU TRABALHO</h1><p>Organização pessoal da jornada</p></header>
+<main id="app"></main>
+<nav class="nav">
+<button onclick="go('home')" id="n-home">🏠<br>Hoje</button>
+<button onclick="go('escala')" id="n-escala">📅<br>Escala</button>
+<button onclick="go('painel')" id="n-painel">🚢<br>Painel</button>
+<button onclick="go('registro')" id="n-registro">📝<br>Registrar</button>
+<button onclick="go('historico')" id="n-historico">📚<br>Histórico</button>
+</nav>
+<script>
+const ESCALA={
+"2026-09-22":["Folga",""],"2026-09-23":["Folga",""],"2026-09-24":["Folga",""],
+"2026-09-25":["Folga",""],"2026-09-26":["Folga",""],"2026-09-27":["Folga",""],
+"2026-09-28":["Folga",""],"2026-09-29":["Trabalho","12:30–18:45"],"2026-09-30":["Trabalho","12:30–18:45"]
+};
+let page="home";
+const $=id=>document.getElementById(id);
+function today(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
+function fmt(d){return new Date(d+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit"})}
+function go(p){page=p;render()}
+function registros(){return JSON.parse(localStorage.getItem("meu_trabalho_registros")||"[]")}
+function saveRegs(r){localStorage.setItem("meu_trabalho_registros",JSON.stringify(r))}
+function nextWork(){const d=today();const k=Object.keys(ESCALA).sort().find(x=>x>=d&&ESCALA[x][0]==="Trabalho");return k?fmt(k)+" — "+ESCALA[k][1]:"Nenhum próximo trabalho cadastrado"}
+function render(){
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));$("n-"+page)?.classList.add("active");
+ const a=$("app");
+ if(page==="home"){
+  const d=today(),e=ESCALA[d],r=registros();
+  a.innerHTML=`<div class="card"><div class="muted">${fmt(d)}</div><div class="big">${e?e[0]:"Escala não cadastrada"}</div><div>${e&&e[1]?e[1]:"Consulte a escala"}</div></div>
+  <div class="card"><h2>Próximo trabalho</h2><div>${nextWork()}</div></div>
+  <div class="card"><div class="grid"><div class="stat"><div class="muted small">Registros</div><b>${r.length}</b></div><div class="stat"><div class="muted small">Período</div><b>Set/2026</b></div></div></div>
+  <div class="card"><h2>Acesso rápido</h2><button onclick="go('painel')">🚢 Painel Operacional</button><button class="secondary" onclick="go('registro')">📝 Registrar turno</button></div>`;
+ }
+ if(page==="escala"){
+  const rows=Object.entries(ESCALA).sort().map(([d,e])=>`<div class="row"><span>${fmt(d)}</span><b class="${e[0]==="Trabalho"?"work":"off"}">${e[0]} ${e[1]?`<span class="tag">${e[1]}</span>`:""}</b></div>`).join("");
+  a.innerHTML=`<div class="card"><div class="topline"><h2>Minha Escala</h2><span class="tag">Setembro 2026</span></div>${rows}</div>
+  <div class="card"><p class="muted small">Escala carregada para o período informado. Datas futuras podem ser acrescentadas nesta versão.</p></div>`;
+ }
+ if(page==="painel"){
+  a.innerHTML=`<div class="card"><h2>🚢 Escala de Navios</h2><p class="muted">Acesso ao portal Embraport/DP World para consulta da escala.</p><a class="link" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">Abrir Escala de Navios</a></div>
+  <div class="card"><h2>⚓ Praticagem</h2><p class="muted">Acesso ao portal Santos Pilots para consultas e confirmações, conforme seu acesso.</p><a class="link" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">Abrir Praticagem</a><p class="muted small">O aplicativo não armazena senha ou credenciais.</p></div>`;
+ }
+ if(page==="registro"){
+  a.innerHTML=`<div class="card"><h2>📝 Registrar turno</h2>
+  <label>Data<input id="rdata" type="date" value="${today()}"></label>
+  <label>Navio<input id="rnavio" placeholder="Nome do navio"></label>
+  <label>Equipamento<input id="requip" placeholder="Equipamento"></label>
+  <label>Turno<input id="rturno" placeholder="Ex.: 12:30–18:45"></label>
+  <label>Ocorrência<textarea id="roco" placeholder="Descreva, se houver"></textarea></label>
+  <label>Observações<textarea id="robs" placeholder="Anotações do turno"></textarea></label>
+  <button onclick="save()">Salvar registro</button></div>`;
+ }
+ if(page==="historico"){
+  const r=registros().slice().reverse();
+  a.innerHTML=`<div class="card"><div class="topline"><h2>📚 Histórico</h2>${r.length?`<span class="tag">${r.length}</span>`:""}</div>
+  ${r.length?r.map((x,i)=>`<div class="row"><div><b>${x.data}</b> · ${x.navio||"Sem navio"}<br><span class="muted small">${x.equipamento||"Sem equipamento"} ${x.turno?"· "+x.turno:""}</span>${x.ocorrencia?`<br>${x.ocorrencia}`:""}${x.obs?`<br><span class="muted">${x.obs}</span>`:""}</div><button class="danger" style="width:auto;margin:0;padding:8px" onclick="del(${r.length-1-i})">Excluir</button></div>`).join(""):`<div class="empty">Nenhum registro ainda.</div>`}</div>`;
+ }
+}
+function save(){
+ const x={data:$("rdata").value,navio:$("rnavio").value.trim(),equipamento:$("requip").value.trim(),turno:$("rturno").value.trim(),ocorrencia:$("roco").value.trim(),obs:$("robs").value.trim(),criado:new Date().toISOString()};
+ const r=registros();r.push(x);saveRegs(r);go("historico");
+}
+function del(index){
+ const r=registros();r.splice(index,1);saveRegs(r);render();
+}
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
+render();
+</script>
+</body>
+</html>
