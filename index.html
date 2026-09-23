@@ -359,4 +359,10 @@ if(tipo==='operadores'){openOperators();return}
 const nomes={permissoes:'Permissões',escala:'Gerenciamento da escala',documentos:'Documentos',treinamentos:'Treinamentos',ocorrencias:'Registros e ocorrências'};
 alert(nomes[tipo]+' será conectado ao banco de dados nesta próxima etapa.');
 }
-async function 
+async function logout(){
+  await sb.auth.signOut();
+  showLogin();
+}
+</script>
+</body>
+</html>
