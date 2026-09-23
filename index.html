@@ -116,14 +116,19 @@ main{padding:19px 22px}
 <form id="signupForm">
 <label for="signupName">Nome completo</label>
 <input id="signupName" autocomplete="name" placeholder="Seu nome completo" required>
+
 <label for="signupUser">Usuário</label>
 <input id="signupUser" autocomplete="username" placeholder="Ex.: joao.silva" required>
+
 <label for="signupEmail">E-mail</label>
 <input id="signupEmail" type="email" autocomplete="email" placeholder="seu@email.com" required>
+
 <label for="signupPass">Senha</label>
 <input id="signupPass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required>
+
 <label for="signupRE">Número do RE</label>
 <input id="signupRE" inputmode="numeric" autocomplete="off" placeholder="Digite seu RE" required>
+
 <label for="signupTeam">Equipe</label>
 <select id="signupTeam" required>
 <option value="">Selecione a equipe</option>
@@ -133,6 +138,7 @@ main{padding:19px 22px}
 <option value="Leão">Leão</option>
 <option value="Tubarão">Tubarão</option>
 </select>
+
 <label for="signupFunction">Função</label>
 <select id="signupFunction" required>
 <option value="">Selecione a função</option>
@@ -145,6 +151,7 @@ main{padding:19px 22px}
 <option value="Operador de Costado">Operador de Costado</option>
 <option value="Estivador">Estivador</option>
 </select>
+
 <button class="login-btn" type="submit">Criar cadastro</button>
 <button class="btn btn-secondary" type="button" onclick="showLogin()">Voltar para o login</button>
 <div id="signupLoading" class="login-loading">Criando cadastro...</div>
@@ -160,6 +167,7 @@ main{padding:19px 22px}
 </header>
 
 <main>
+
 <section id="hoje" class="view active">
 <div class="hero">
 <div class="date" id="date"></div>
@@ -167,6 +175,7 @@ main{padding:19px 22px}
 <div class="shift">00:30 - 06:45</div>
 <p>Seu turno de hoje está conforme a escala cadastrada.</p>
 </div>
+
 <div class="card">
 <h3>🌦️ Previsão do tempo</h3>
 <div class="weather-box">
@@ -180,6 +189,7 @@ main{padding:19px 22px}
 <div class="source">Fonte: Open-Meteo · previsão para Santos/SP</div>
 <a class="btn btn-secondary" href="https://www.climatempo.com.br/previsao-do-tempo/cidade/544/santos-sp" target="_blank" rel="noopener">Ver previsão completa</a>
 </div>
+
 <div class="card scale-card">
 <h3>📄 Escala oficial</h3>
 <p>Consulte a tabela oficial completa de 2026 em PDF.</p>
@@ -191,14 +201,17 @@ main{padding:19px 22px}
 <div class="card">
 <h2>📅 Escala</h2>
 <p>Aqui ficará a escala oficial completa, com consulta por mês e turno.</p>
-<button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+<button class="btn btn-primary" onclick="go('operador')">👷 Abrir Área do Operador</button>
 </div>
 </section>
 
 <section id="operador" class="view simple">
 <div class="card">
+
 <div class="admin-badge">👷 ÁREA DO OPERADOR</div>
+
 <h2>Área do Operador</h2>
+
 <p>Acesso rápido aos documentos, horários e portais operacionais utilizados na jornada.</p>
 
 <div class="operator-links">
@@ -246,6 +259,7 @@ main{padding:19px 22px}
 </div>
 
 <button class="btn btn-secondary" onclick="go('hoje')">← Voltar para Hoje</button>
+
 </div>
 </section>
 
@@ -267,131 +281,408 @@ main{padding:19px 22px}
 
 <section id="operadores" class="view simple">
 <div class="card">
+
 <div class="admin-badge">👑 ADMINISTRADOR</div>
+
 <h2>👷 Operadores</h2>
+
 <p>Operadores cadastrados no MEU TRABALHO.</p>
+
 <input id="operatorSearch" placeholder="🔎 Buscar por nome, RE, equipe ou usuário" style="width:100%;padding:16px;border:1px solid #d1d5db;border-radius:16px;font-size:16px" oninput="renderOperators()">
-<div id="operatorsList" class="operators-list"><div class="source">Carregando operadores...</div></div>
+
+<div id="operatorsList" class="operators-list">
+<div class="source">Carregando operadores...</div>
+</div>
+
 <button class="btn btn-secondary" onclick="go('mais')">← Voltar para Administração</button>
+
 </div>
 </section>
 
 <section id="mais" class="view simple">
 <div class="card">
+
 <div class="admin-badge">👑 ADMINISTRADOR</div>
+
 <h2>☰ Administração</h2>
+
 <p>Gerencie os operadores, permissões, documentos e informações do aplicativo.</p>
+
 <div class="admin-grid">
-<button class="admin-action" onclick="adminMsg('operadores')"><strong>👷 Operadores</strong><span>Cadastrar e gerenciar usuários da equipe.</span></button>
-<button class="admin-action" onclick="adminMsg('operador')"><strong>👷 Área do Operador</strong><span>Acessar documentos, horários e portais operacionais.</span></button>
-<button class="admin-action" onclick="adminMsg('permissoes')"><strong>🛡️ Permissões</strong><span>Definir o que cada usuário poderá acessar.</span></button>
-<button class="admin-action" onclick="adminMsg('escala')"><strong>📅 Escala</strong><span>Gerenciar a escala oficial e documentos.</span></button>
-<button class="admin-action" onclick="adminMsg('documentos')"><strong>📚 Documentos</strong><span>Organizar documentos e materiais de trabalho.</span></button>
-<button class="admin-action" onclick="adminMsg('treinamentos')"><strong>🎓 Treinamentos</strong><span>Área para treinamentos e conteúdos.</span></button>
-<button class="admin-action" onclick="adminMsg('ocorrencias')"><strong>📝 Registros</strong><span>Consultar registros e ocorrências dos operadores.</span></button>
+
+<button class="admin-action" onclick="adminMsg('operadores')">
+<strong>👷 Operadores</strong>
+<span>Cadastrar e gerenciar usuários da equipe.</span>
+</button>
+
+<button class="admin-action" onclick="adminMsg('operador')">
+<strong>👷 Área do Operador</strong>
+<span>Acessar documentos, horários e portais operacionais.</span>
+</button>
+
+<button class="admin-action" onclick="adminMsg('permissoes')">
+<strong>🛡️ Permissões</strong>
+<span>Definir o que cada usuário poderá acessar.</span>
+</button>
+
+<button class="admin-action" onclick="adminMsg('escala')">
+<strong>📅 Escala</strong>
+<span>Gerenciar a escala oficial e documentos.</span>
+</button>
+
+<button class="admin-action" onclick="adminMsg('documentos')">
+<strong>📚 Documentos</strong>
+<span>Organizar documentos e materiais de trabalho.</span>
+</button>
+
+<button class="admin-action" onclick="adminMsg('treinamentos')">
+<strong>🎓 Treinamentos</strong>
+<span>Área para treinamentos e conteúdos.</span>
+</button>
+
+<button class="admin-action" onclick="adminMsg('ocorrencias')">
+<strong>📝 Registros</strong>
+<span>Consultar registros e ocorrências dos operadores.</span>
+</button>
+
 </div>
+
 <button class="btn btn-secondary logout" onclick="logout()">🚪 Sair da conta</button>
+
 </div>
 </section>
+
 </main>
 
 <nav class="nav">
-<button class="active" data-view="hoje" onclick="go('hoje',this)"><span class="ico">🏠</span>Hoje</button>
-<button data-view="escala" onclick="go('escala',this)"><span class="ico">📅</span>Escala</button>
-<button data-view="operador" onclick="go('operador',this)"><span class="ico">👷</span>Operador</button>
-<button data-view="registrar" onclick="go('registrar',this)"><span class="ico">📝</span>Registrar</button>
-<button data-view="mais" onclick="go('mais',this)"><span class="ico">☰</span>Mais</button>
+
+<button class="active" data-view="hoje" onclick="go('hoje',this)">
+<span class="ico">🏠</span>Hoje
+</button>
+
+<button data-view="escala" onclick="go('escala',this)">
+<span class="ico">📅</span>Escala
+</button>
+
+<button data-view="operador" onclick="go('operador',this)">
+<span class="ico">👷</span>Operador
+</button>
+
+<button data-view="registrar" onclick="go('registrar',this)">
+<span class="ico">📝</span>Registrar
+</button>
+
+<button data-view="mais" onclick="go('mais',this)">
+<span class="ico">☰</span>Mais
+</button>
+
 </nav>
 
 <script>
 function updateDate(){
+
 const now=new Date();
-const days=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
-document.getElementById('date').textContent=days[now.getDay()]+', '+String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0');
+
+const days=[
+'domingo',
+'segunda-feira',
+'terça-feira',
+'quarta-feira',
+'quinta-feira',
+'sexta-feira',
+'sábado'
+];
+
+document.getElementById('date').textContent=
+days[now.getDay()]+', '+
+String(now.getDate()).padStart(2,'0')+'/'+
+String(now.getMonth()+1).padStart(2,'0');
+
 const h=now.getHours();
-document.getElementById('greeting').textContent=h<12?'Olá, bom dia!':h<18?'Olá, boa tarde!':'Olá, boa noite!';
+
+document.getElementById('greeting').textContent=
+h<12?'Olá, bom dia!':
+h<18?'Olá, boa tarde!':
+'Olá, boa noite!';
+
 }
+
 function go(id,btn){
-document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-const target=btn||document.querySelector('.nav button[data-view="'+id+'"]');
-if(target)target.classList.add('active');
-window.scrollTo({top:0,behavior:'smooth'});
+
+document.querySelectorAll('.view').forEach(v=>{
+v.classList.remove('active')
+});
+
+const targetView=document.getElementById(id);
+
+if(targetView){
+targetView.classList.add('active');
 }
+
+document.querySelectorAll('.nav button').forEach(b=>{
+b.classList.remove('active')
+});
+
+const target=
+btn||
+document.querySelector('.nav button[data-view="'+id+'"]');
+
+if(target){
+target.classList.add('active');
+}
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+}
+
 updateDate();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL="https://pgvicndflunzrlzwtlog.supabase.co";
-const SUPABASE_KEY="sb_publishable_D6TBgj3rx5sER9s4kSNT9EQ_xHx0tXu8";
-const LOGIN_URL="https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/login";
-const SIGNUP_URL="https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/signup-operator";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-function showLogin(){document.getElementById('loginScreen').style.display='flex'}
-function hideLogin(){document.getElementById('loginScreen').style.display='none'}
-async function initAuth(){
-const {data:{session}}=await sb.auth.getSession();
-if(session)hideLogin();else showLogin();
+<script>
+
+const SUPABASE_URL=
+"https://pgvicndflunzrlzwtlog.supabase.co";
+
+const SUPABASE_KEY=
+"sb_publishable_D6TBgj3rx5sER9s4kSNT9EQ_xHx0tXu8";
+
+const LOGIN_URL=
+"https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/login";
+
+const SIGNUP_URL=
+"https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/signup-operator";
+
+const sb=
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+function showLogin(){
+
+document.getElementById('signupScreen').style.display='none';
+
+document.getElementById('loginScreen').style.display='flex';
+
 }
-document.getElementById('loginForm').addEventListener('submit',async(e)=>{
-e.preventDefault();
-const user=document.getElementById('loginUser').value.trim();
-const pass=document.getElementById('loginPass').value;
-const err=document.getElementById('loginError');
-const loading=document.getElementById('loginLoading');
-err.style.display='none';loading.style.display='block';
-try{
-const response=await fetch(LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:user,password:pass})});
-const data=await response.json();
-if(!response.ok||!data.session)throw new Error('Usuário ou senha inválidos.');
-await sb.auth.setSession(data.session);
+
+function hideLogin(){
+
+document.getElementById('loginScreen').style.display='none';
+
+document.getElementById('signupScreen').style.display='none';
+
+}
+
+async function initAuth(){
+
+const {
+data:{
+session
+}
+}=await sb.auth.getSession();
+
+if(session){
+
 hideLogin();
+
+}else{
+
+showLogin();
+
+}
+
+}
+
+document
+.getElementById('loginForm')
+.addEventListener('submit',async(e)=>{
+
+e.preventDefault();
+
+const user=
+document.getElementById('loginUser').value.trim();
+
+const pass=
+document.getElementById('loginPass').value;
+
+const err=
+document.getElementById('loginError');
+
+const loading=
+document.getElementById('loginLoading');
+
+err.style.display='none';
+
+loading.style.display='block';
+
+try{
+
+const response=
+await fetch(
+LOGIN_URL,
+{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify({
+username:user,
+password:pass
+})
+}
+);
+
+const data=
+await response.json();
+
+if(!response.ok||!data.session){
+
+throw new Error(
+'Usuário ou senha inválidos.'
+);
+
+}
+
+await sb.auth.setSession(data.session);
+
+hideLogin();
+
 }catch(ex){
-err.textContent=ex.message||'Não foi possível entrar.';
+
+err.textContent=
+ex.message||
+'Não foi possível entrar.';
+
 err.style.display='block';
-}finally{loading.style.display='none'}
+
+}finally{
+
+loading.style.display='none';
+
+}
+
 });
-sb.auth.onAuthStateChange((_event,session)=>{if(session)hideLogin();else showLogin()});
+
+sb.auth.onAuthStateChange(
+(_event,session)=>{
+
+if(session){
+
+hideLogin();
+
+}else{
+
+showLogin();
+
+}
+
+});
+
 initAuth();
 
 function showSignup(){
+
 document.getElementById('loginScreen').style.display='none';
+
 document.getElementById('signupScreen').style.display='flex';
+
 }
-function showLogin(){
-document.getElementById('signupScreen').style.display='none';
-document.getElementById('loginScreen').style.display='flex';
-}
-document.getElementById('signupForm').addEventListener('submit',async(e)=>{
+
+document
+.getElementById('signupForm')
+.addEventListener('submit',async(e)=>{
+
 e.preventDefault();
+
 const payload={
-full_name:document.getElementById('signupName').value.trim(),
-username:document.getElementById('signupUser').value.trim(),
-email:document.getElementById('signupEmail').value.trim(),
-password:document.getElementById('signupPass').value,
-re:document.getElementById('signupRE').value.trim(),
-equipe:document.getElementById('signupTeam').value,
-funcao:document.getElementById('signupFunction').value,
-turno:JSON.stringify({
-re:document.getElementById('signupRE').value.trim(),
-equipe:document.getElementById('signupTeam').value,
-funcao:document.getElementById('signupFunction').value
-})};
-const err=document.getElementById('signupError');
-const loading=document.getElementById('signupLoading');
-const success=document.getElementById('signupSuccess');
-err.style.display='none';success.style.display='none';loading.style.display='block';
+
+full_name:
+document.getElementById('signupName')
+.value.trim(),
+
+username:
+document.getElementById('signupUser')
+.value.trim(),
+
+email:
+document.getElementById('signupEmail')
+.value.trim(),
+
+password:
+document.getElementById('signupPass')
+.value,
+
+re:
+document.getElementById('signupRE')
+.value.trim(),
+
+equipe:
+document.getElementById('signupTeam')
+.value,
+
+funcao:
+document.getElementById('signupFunction')
+.value,
+
+turno:
+JSON.stringify({
+
+re:
+document.getElementById('signupRE')
+.value.trim(),
+
+equipe:
+document.getElementById('signupTeam')
+.value,
+
+funcao:
+document.getElementById('signupFunction')
+.value
+
+})
+
+};
+
+const err=
+document.getElementById('signupError');
+
+const loading=
+document.getElementById('signupLoading');
+
+const success=
+document.getElementById('signupSuccess');
+
+err.style.display='none';
+
+success.style.display='none';
+
+loading.style.display='block';
+
 try{
-const response=await fetch(SIGNUP_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-const data=await response.json();
-if(!response.ok)throw new Error(
-data.error==='usuario_ja_existe'?'Esse usuário já está cadastrado.':
-data.error==='email_ja_cadastrado'?'Esse e-mail já está cadastrado.':
-data.error==='dados_invalidos'?'Confira os dados, selecione a equipe e a função, e use uma senha com pelo menos 6 caracteres.':
-'Não foi possível criar o cadastro.'
+
+const response=
+await fetch(
+SIGNUP_URL,
+{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify(payload)
+}
 );
-success.style.display='block';
-const loginResponse=await fetch(LOGIN_URL,{m
+
+const data=
+await response.json();
+
+if(!response.ok){
+
+throw new Error(
+
+data.error==='usuario_ja_exist
