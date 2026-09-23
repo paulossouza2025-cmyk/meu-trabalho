@@ -86,12 +86,36 @@ main{padding:19px 22px}
 <label for="loginPass">Senha</label>
 <input id="loginPass" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
 <button class="login-btn" type="submit">Entrar</button>
+<button class="btn btn-secondary" type="button" onclick="showSignup()">🆕 Criar meu cadastro</button>
 <div id="loginLoading" class="login-loading">Entrando...</div>
 <div id="loginError" class="login-error"></div>
 </form>
 </div>
 </div>
 
+<div id="signupScreen" style="display:none;position:fixed;inset:0;z-index:1000;background:#111827;align-items:center;justify-content:center;padding:24px;overflow:auto">
+<div class="login-card">
+<h2>Criar cadastro</h2>
+<p>Cadastre-se como operador do MEU TRABALHO.</p>
+<form id="signupForm">
+<label for="signupName">Nome completo</label>
+<input id="signupName" autocomplete="name" placeholder="Seu nome completo" required>
+<label for="signupUser">Usuário</label>
+<input id="signupUser" autocomplete="username" placeholder="Ex.: joao.silva" required>
+<label for="signupEmail">E-mail</label>
+<input id="signupEmail" type="email" autocomplete="email" placeholder="seu@email.com" required>
+<label for="signupPass">Senha</label>
+<input id="signupPass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required>
+<label for="signupShift">Turno</label>
+<input id="signupShift" placeholder="Ex.: 00:30 - 06:45">
+<button class="login-btn" type="submit">Criar cadastro</button>
+<button class="btn btn-secondary" type="button" onclick="showLogin()">Voltar para o login</button>
+<div id="signupLoading" class="login-loading">Criando cadastro...</div>
+<div id="signupError" class="login-error"></div>
+<div id="signupSuccess" style="display:none;margin-top:15px;padding:12px;border-radius:14px;background:#dcfce7;color:#166534;font-size:15px">Cadastro criado! Entrando...</div>
+</form>
+</div>
+</div>
 <header>
 <h1>MEU TRABALHO</h1>
 <p>Organização da jornada e painel operacional</p>
@@ -200,6 +224,7 @@ updateDate();
 const SUPABASE_URL="https://pgvicndflunzrlzwtlog.supabase.co";
 const SUPABASE_KEY="sb_publishable_D6TBgj3rx5sERs4kSNT9EQ_xHx0tXu8";
 const LOGIN_URL="https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/login";
+const SIGNUP_URL="https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/signup-operator";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 function showLogin(){document.getElementById('loginScreen').style.display='flex'}
@@ -229,6 +254,48 @@ err.style.display='block';
 sb.auth.onAuthStateChange((_event,session)=>{if(session)hideLogin();else showLogin()});
 initAuth();
 
+function showSignup(){
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('signupScreen').style.display='flex';
+}
+function showLogin(){
+document.getElementById('signupScreen').style.display='none';
+document.getElementById('loginScreen').style.display='flex';
+}
+document.getElementById('signupForm').addEventListener('submit',async(e)=>{
+e.preventDefault();
+const payload={
+full_name:document.getElementById('signupName').value.trim(),
+username:document.getElementById('signupUser').value.trim(),
+email:document.getElementById('signupEmail').value.trim(),
+password:document.getElementById('signupPass').value,
+turno:document.getElementById('signupShift').value.trim()
+};
+const err=document.getElementById('signupError');
+const loading=document.getElementById('signupLoading');
+const success=document.getElementById('signupSuccess');
+err.style.display='none';success.style.display='none';loading.style.display='block';
+try{
+const response=await fetch(SIGNUP_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+const data=await response.json();
+if(!response.ok)throw new Error(
+data.error==='usuario_ja_existe'?'Esse usuário já está cadastrado.':
+data.error==='email_ja_cadastrado'?'Esse e-mail já está cadastrado.':
+data.error==='dados_invalidos'?'Confira os dados. O usuário deve ter 4 a 30 caracteres e a senha pelo menos 6.':
+'Não foi possível criar o cadastro.'
+);
+success.style.display='block';
+const loginResponse=await fetch(LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:payload.username,password:payload.password})});
+const loginData=await loginResponse.json();
+if(!loginResponse.ok||!loginData.session)throw new Error('Cadastro criado. Faça o login manualmente.');
+await sb.auth.setSession(loginData.session);
+document.getElementById('signupScreen').style.display='none';
+hideLogin();
+}catch(ex){
+err.textContent=ex.message||'Não foi possível criar o cadastro.';
+err.style.display='block';
+}finally{loading.style.display='none'}
+});
 function adminMsg(tipo){
 const nomes={operadores:'Cadastro de operadores',permissoes:'Permissões',escala:'Gerenciamento da escala',documentos:'Documentos',treinamentos:'Treinamentos',ocorrencias:'Registros e ocorrências'};
 alert(nomes[tipo]+' será conectado ao banco de dados nesta próxima etapa.');
