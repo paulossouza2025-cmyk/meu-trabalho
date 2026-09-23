@@ -299,7 +299,12 @@ equipe:
 document.getElementById('signupTeam').value,
 
 funcao:
-document.getElementById('signupFunction').value};
+document.getElementById('signupFunction').value,
+turno:JSON.stringify({
+re:document.getElementById('signupRE').value.trim(),
+equipe:document.getElementById('signupTeam').value,
+funcao:document.getElementById('signupFunction').value
+})};
 const err=document.getElementById('signupError');
 const loading=document.getElementById('signupLoading');
 const success=document.getElementById('signupSuccess');
