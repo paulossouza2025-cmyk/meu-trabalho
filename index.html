@@ -67,8 +67,240 @@ main{padding:19px 22px}
 .login-card h2{margin:0 0 8px;font-size:31px;color:#111827}
 .login-card p{margin:0 0 24px;color:#6b7280;font-size:17px}
 .login-card label{display:block;margin:14px 0 7px;font-weight:700;color:#374151}
-.login-card input,.login-card select{width:100%;padding:17px;border:1px solid #d1d5db;border-radius:16px;font-size:18px;outline:none;background:#fff;color:#111827}
+.login-card input{width:100%;padding:17px;border:1px solid #d1d5db;border-radius:16px;font-size:18px;outline:none}
 .login-card input:focus{border-color:#2857d9}
 .login-btn{width:100%;margin-top:22px;padding:18px;border:0;border-radius:18px;background:#2857d9;color:#fff;font-size:19px;font-weight:700}
 .login-error{display:none;margin-top:15px;padding:12px;border-radius:14px;background:#fee2e2;color:#991b1b;font-size:15px}
-.login-loading{display:none
+.login-loading{display:none;text-align:center;margin-top:12px;color:#6b7280}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+<div class="login-card">
+<h2>MEU TRABALHO</h2>
+<p>Acesse sua jornada e suas ferramentas de trabalho.</p>
+<form id="loginForm">
+<label for="loginUser">Usuário</label>
+<input id="loginUser" autocomplete="username" placeholder="Digite seu usuário" required>
+<label for="loginPass">Senha</label>
+<input id="loginPass" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+<button class="login-btn" type="submit">Entrar</button>
+<button class="btn btn-secondary" type="button" onclick="showSignup()">🆕 Criar meu cadastro</button>
+<div id="loginLoading" class="login-loading">Entrando...</div>
+<div id="loginError" class="login-error"></div>
+</form>
+</div>
+</div>
+
+<div id="signupScreen" style="display:none;position:fixed;inset:0;z-index:1000;background:#111827;align-items:center;justify-content:center;padding:24px;overflow:auto">
+<div class="login-card">
+<h2>Criar cadastro</h2>
+<p>Cadastre-se como operador do MEU TRABALHO.</p>
+<form id="signupForm">
+<label for="signupName">Nome completo</label>
+<input id="signupName" autocomplete="name" placeholder="Seu nome completo" required>
+<label for="signupUser">Usuário</label>
+<input id="signupUser" autocomplete="username" placeholder="Ex.: joao.silva" required>
+<label for="signupEmail">E-mail</label>
+<input id="signupEmail" type="email" autocomplete="email" placeholder="seu@email.com" required>
+<label for="signupPass">Senha</label>
+<input id="signupPass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required>
+<label for="signupShift">Turno</label>
+<input id="signupShift" placeholder="Ex.: 00:30 - 06:45">
+<button class="login-btn" type="submit">Criar cadastro</button>
+<button class="btn btn-secondary" type="button" onclick="showLogin()">Voltar para o login</button>
+<div id="signupLoading" class="login-loading">Criando cadastro...</div>
+<div id="signupError" class="login-error"></div>
+<div id="signupSuccess" style="display:none;margin-top:15px;padding:12px;border-radius:14px;background:#dcfce7;color:#166534;font-size:15px">Cadastro criado! Entrando...</div>
+</form>
+</div>
+</div>
+<header>
+<h1>MEU TRABALHO</h1>
+<p>Organização da jornada e painel operacional</p>
+</header>
+
+<main>
+<section id="hoje" class="view active">
+<div class="hero">
+<div class="date" id="date"></div>
+<h2 id="greeting">Olá, boa noite!</h2>
+<div class="shift">00:30 - 06:45</div>
+<p>Seu turno de hoje está conforme a escala cadastrada.</p>
+</div>
+<div class="card">
+<h3>🌦️ Previsão do tempo</h3>
+<div class="weather-box">
+<div class="weather-icon">🌦️</div>
+<div>
+<div class="temp">20°C</div>
+<div class="condition">Pancadas</div>
+<div class="details">Máx. 24° · mín. 20° · chuva 100%<br>Umidade 97% · vento 7 km/h</div>
+</div>
+</div>
+<div class="source">Fonte: Open-Meteo · previsão para Santos/SP</div>
+<a class="btn btn-secondary" href="https://www.climatempo.com.br/previsao-do-tempo/cidade/544/santos-sp" target="_blank" rel="noopener">Ver previsão completa</a>
+</div>
+<div class="card scale-card">
+<h3>📄 Escala oficial</h3>
+<p>Consulte a tabela oficial completa de 2026 em PDF.</p>
+<button class="btn btn-primary" onclick="alert('O PDF da escala será conectado nesta etapa.')">👁️ Visualizar escala em PDF</button>
+<button class="btn btn-secondary" onclick="alert('O arquivo da escala será conectado nesta etapa.')">⬇️ Baixar escala</button>
+</div>
+</section>
+
+<section id="escala" class="view simple">
+<div class="card">
+<h2>📅 Escala</h2>
+<p>Aqui ficará a escala oficial completa, com consulta por mês e turno.</p>
+<button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+</div>
+</section>
+
+<section id="painel" class="view simple">
+<div class="card">
+<h2>🚢 Painel operacional</h2>
+<p>Área reservada para as informações operacionais, navios e praticagem.</p>
+<button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+</div>
+</section>
+
+<section id="registrar" class="view simple">
+<div class="card">
+<h2>📝 Registrar</h2>
+<p>Área reservada para registro de turno, ocorrências e observações.</p>
+<button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+</div>
+</section>
+
+<section id="mais" class="view simple">
+<div class="card">
+<div class="admin-badge">👑 ADMINISTRADOR</div>
+<h2>☰ Administração</h2>
+<p>Gerencie os operadores, permissões, documentos e informações do aplicativo.</p>
+<div class="admin-grid">
+<button class="admin-action" onclick="adminMsg('operadores')"><strong>👷 Operadores</strong><span>Cadastrar e gerenciar usuários da equipe.</span></button>
+<button class="admin-action" onclick="adminMsg('permissoes')"><strong>🛡️ Permissões</strong><span>Definir o que cada usuário poderá acessar.</span></button>
+<button class="admin-action" onclick="adminMsg('escala')"><strong>📅 Escala</strong><span>Gerenciar a escala oficial e documentos.</span></button>
+<button class="admin-action" onclick="adminMsg('documentos')"><strong>📚 Documentos</strong><span>Organizar documentos e materiais de trabalho.</span></button>
+<button class="admin-action" onclick="adminMsg('treinamentos')"><strong>🎓 Treinamentos</strong><span>Área para treinamentos e conteúdos.</span></button>
+<button class="admin-action" onclick="adminMsg('ocorrencias')"><strong>📝 Registros</strong><span>Consultar registros e ocorrências dos operadores.</span></button>
+</div>
+<button class="btn btn-secondary logout" onclick="logout()">🚪 Sair da conta</button>
+</div>
+</section>
+</main>
+
+<nav class="nav">
+<button class="active" data-view="hoje" onclick="go('hoje',this)"><span class="ico">🏠</span>Hoje</button>
+<button data-view="escala" onclick="go('escala',this)"><span class="ico">📅</span>Escala</button>
+<button data-view="painel" onclick="go('painel',this)"><span class="ico">🚢</span>Painel</button>
+<button data-view="registrar" onclick="go('registrar',this)"><span class="ico">📝</span>Registrar</button>
+<button data-view="mais" onclick="go('mais',this)"><span class="ico">☰</span>Mais</button>
+</nav>
+
+<script>
+function updateDate(){
+const now=new Date();
+const days=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+document.getElementById('date').textContent=days[now.getDay()]+', '+String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0');
+const h=now.getHours();
+document.getElementById('greeting').textContent=h<12?'Olá, bom dia!':h<18?'Olá, boa tarde!':'Olá, boa noite!';
+}
+function go(id,btn){
+document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+const target=btn||document.querySelector('.nav button[data-view="'+id+'"]');
+if(target)target.classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+updateDate();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://pgvicndflunzrlzwtlog.supabase.co";
+const SUPABASE_KEY="sb_publishable_D6TBgj3rx5sERs4kSNT9EQ_xHx0tXu8";
+const LOGIN_URL="https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/login";
+const SIGNUP_URL="https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/signup-operator";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+function showLogin(){document.getElementById('loginScreen').style.display='flex'}
+function hideLogin(){document.getElementById('loginScreen').style.display='none'}
+async function initAuth(){
+const {data:{session}}=await sb.auth.getSession();
+if(session)hideLogin();else showLogin();
+}
+document.getElementById('loginForm').addEventListener('submit',async(e)=>{
+e.preventDefault();
+const user=document.getElementById('loginUser').value.trim();
+const pass=document.getElementById('loginPass').value;
+const err=document.getElementById('loginError');
+const loading=document.getElementById('loginLoading');
+err.style.display='none';loading.style.display='block';
+try{
+const response=await fetch(LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:user,password:pass})});
+const data=await response.json();
+if(!response.ok||!data.session)throw new Error('Usuário ou senha inválidos.');
+await sb.auth.setSession(data.session);
+hideLogin();
+}catch(ex){
+err.textContent=ex.message||'Não foi possível entrar.';
+err.style.display='block';
+}finally{loading.style.display='none'}
+});
+sb.auth.onAuthStateChange((_event,session)=>{if(session)hideLogin();else showLogin()});
+initAuth();
+
+function showSignup(){
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('signupScreen').style.display='flex';
+}
+function showLogin(){
+document.getElementById('signupScreen').style.display='none';
+document.getElementById('loginScreen').style.display='flex';
+}
+document.getElementById('signupForm').addEventListener('submit',async(e)=>{
+e.preventDefault();
+const payload={
+full_name:document.getElementById('signupName').value.trim(),
+username:document.getElementById('signupUser').value.trim(),
+email:document.getElementById('signupEmail').value.trim(),
+password:document.getElementById('signupPass').value,
+turno:document.getElementById('signupShift').value.trim()
+};
+const err=document.getElementById('signupError');
+const loading=document.getElementById('signupLoading');
+const success=document.getElementById('signupSuccess');
+err.style.display='none';success.style.display='none';loading.style.display='block';
+try{
+const response=await fetch(SIGNUP_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+const data=await response.json();
+if(!response.ok)throw new Error(
+data.error==='usuario_ja_existe'?'Esse usuário já está cadastrado.':
+data.error==='email_ja_cadastrado'?'Esse e-mail já está cadastrado.':
+data.error==='dados_invalidos'?'Confira os dados. O usuário deve ter 4 a 30 caracteres e a senha pelo menos 6.':
+'Não foi possível criar o cadastro.'
+);
+success.style.display='block';
+const loginResponse=await fetch(LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:payload.username,password:payload.password})});
+const loginData=await loginResponse.json();
+if(!loginResponse.ok||!loginData.session)throw new Error('Cadastro criado. Faça o login manualmente.');
+await sb.auth.setSession(loginData.session);
+document.getElementById('signupScreen').style.display='none';
+hideLogin();
+}catch(ex){
+err.textContent=ex.message||'Não foi possível criar o cadastro.';
+err.style.display='block';
+}finally{loading.style.display='none'}
+});
+function adminMsg(tipo){
+const nomes={operadores:'Cadastro de operadores',permissoes:'Permissões',escala:'Gerenciamento da escala',documentos:'Documentos',treinamentos:'Treinamentos',ocorrencias:'Registros e ocorrências'};
+alert(nomes[tipo]+' será conectado ao banco de dados nesta próxima etapa.');
+}
+async function logout(){await sb.auth.signOut()}
+</script>
+</body>
+</html>
