@@ -44,7 +44,7 @@ main{max-width:760px;margin:0 auto;padding:20px 22px}
 .admin-action{border:1px solid #e5e7eb;background:#fff;border-radius:20px;padding:18px;text-align:left;cursor:pointer}
 .admin-action strong{display:block;font-size:18px;color:#111827;margin-bottom:6px}
 .admin-action span{display:block;color:#6b7280;font-size:14px;line-height:1.3}
-.admin-badge{display:inline-block;background:#e8efff;color:#2857d9;padding:7px 11px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:15px}
+.operators-list{display:grid;gap:12px;margin-top:18px}.operator-row{border:1px solid #e5e7eb;border-radius:18px;padding:16px;background:#fff}.operator-row strong{display:block;font-size:18px}.operator-meta{color:#6b7280;font-size:14px;line-height:1.45;margin-top:5px}.operator-status{display:inline-block;margin-top:9px;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:700}.status-on{background:#dcfce7;color:#166534}.status-off{background:#fee2e2;color:#991b1b}.operator-tools{display:flex;gap:8px;margin-top:12px}.operator-tools button{flex:1;border:0;border-radius:12px;padding:11px;font-weight:700;cursor:pointer}.op-toggle{background:#e5e7eb;color:#111827}.admin-badge{display:inline-block;background:#e8efff;color:#2857d9;padding:7px 11px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:15px}
 .logout{margin-top:18px}
 @media(max-width:430px){
 header{padding:27px 24px 23px}
@@ -196,6 +196,8 @@ main{padding:19px 22px}
 </div>
 </section>
 
+<section id="operadores" class="view simple"><div class="card"><div class="admin-badge">👑 ADMINISTRADOR</div><h2>👷 Operadores</h2><p>Operadores cadastrados no MEU TRABALHO.</p><input id="operatorSearch" placeholder="🔎 Buscar por nome, RE, equipe ou usuário" style="width:100%;padding:16px;border:1px solid #d1d5db;border-radius:16px;font-size:16px" oninput="renderOperators()"><div id="operatorsList" class="operators-list"><div class="source">Carregando operadores...</div></div><button class="btn btn-secondary" onclick="go('mais')">← Voltar para Administração</button></div></section>
+
 <section id="mais" class="view simple">
 <div class="card">
 <div class="admin-badge">👑 ADMINISTRADOR</div>
@@ -330,11 +332,31 @@ err.textContent=ex.message||'Não foi possível criar o cadastro.';
 err.style.display='block';
 }finally{loading.style.display='none'}
 });
+let operatorsCache=[];
+async function openOperators(){go('operadores');await loadOperators();}
+async function loadOperators(){
+const box=document.getElementById('operatorsList');
+box.innerHTML='<div class="source">Carregando operadores...</div>';
+const {data,error}=await sb.from('profiles').select('id,username,full_name,role,active,is_operator,re,equipe,funcao,created_at').eq('is_operator',true).order('full_name',{ascending:true});
+if(error){box.innerHTML='<div class="source">Não foi possível carregar os operadores.</div>';return}
+operatorsCache=data||[];renderOperators();
+}
+function renderOperators(){
+const box=document.getElementById('operatorsList');
+const q=(document.getElementById('operatorSearch')?.value||'').toLowerCase().trim();
+const list=operatorsCache.filter(o=>[o.full_name,o.username,o.re,o.equipe,o.funcao].some(v=>String(v||'').toLowerCase().includes(q)));
+if(!list.length){box.innerHTML='<div class="source">Nenhum operador encontrado.</div>';return}
+box.innerHTML=list.map(o=>'<div class="operator-row"><strong>'+escapeHtml(o.full_name||o.username)+'</strong><div class="operator-meta">Usuário: '+escapeHtml(o.username)+'<br>RE: '+escapeHtml(o.re||'—')+' · Equipe: '+escapeHtml(o.equipe||'—')+'<br>Função: '+escapeHtml(o.funcao||'—')+'</div><span class="operator-status '+(o.active?'status-on':'status-off')+'">'+(o.active?'ATIVO':'INATIVO')+'</span><div class="operator-tools"><button class="op-toggle" onclick="toggleOperator(\''+o.id+'\','+(o.active?'false':'true')+')">'+(o.active?'🔴 Desativar':'🟢 Ativar')+'</button></div></div>').join('');
+}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+async function toggleOperator(id,active){
+const {error}=await sb.from('profiles').update({active}).eq('id',id);
+if(error){alert('Não foi possível alterar o status.');return}
+await loadOperators();
+}
 function adminMsg(tipo){
-const nomes={operadores:'Cadastro de operadores',permissoes:'Permissões',escala:'Gerenciamento da escala',documentos:'Documentos',treinamentos:'Treinamentos',ocorrencias:'Registros e ocorrências'};
+if(tipo==='operadores'){openOperators();return}
+const nomes={permissoes:'Permissões',escala:'Gerenciamento da escala',documentos:'Documentos',treinamentos:'Treinamentos',ocorrencias:'Registros e ocorrências'};
 alert(nomes[tipo]+' será conectado ao banco de dados nesta próxima etapa.');
 }
-async function logout(){await sb.auth.signOut()}
-</script>
-</body>
-</html>
+async function 
