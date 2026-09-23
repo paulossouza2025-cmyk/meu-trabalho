@@ -106,6 +106,8 @@ main{padding:19px 22px}
 <input id="signupEmail" type="email" autocomplete="email" placeholder="seu@email.com" required>
 <label for="signupPass">Senha</label>
 <input id="signupPass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required>
+<label for="signupRE">Número do RE</label>
+<input id="signupRE" inputmode="numeric" autocomplete="off" placeholder="Digite seu RE" required>
 <label for="signupTeam">Equipe</label>
 <select id="signupTeam" required>
 <option value="">Selecione a equipe</option>
@@ -286,6 +288,10 @@ document.getElementById('signupForm').addEventListener('submit',async(e)=>{
 e.preventDefault();
 const payload={
 full_name:document.getElementById('signupName').value.trim(),
+
+re:
+document.getElementById('signupRE')
+.value.trim(),
 username:document.getElementById('signupUser').value.trim(),
 email:document.getElementById('signupEmail').value.trim(),
 password:document.getElementById('signupPass').value,
@@ -326,4 +332,4 @@ alert(nomes[tipo]+' será conectado ao banco de dados nesta próxima etapa.');
 async function logout(){await sb.auth.signOut()}
 </script>
 </body>
-  </html>
+</html>
