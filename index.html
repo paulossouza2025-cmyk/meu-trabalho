@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<meta name="description" content="MEU TRABALHO â€” jornada, operaÃ§Ã£o e gestÃ£o">
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="description" content="MEU TRABALHO — jornada, operação e gestão">
+<link rel="manifest" href="manifest.webmanifest?v=8">
 <title>MEU TRABALHO</title>
 <style>
+html,body,button,input,select,textarea{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 :root{--bg:#f4f6f8;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--nav:#0f172a;--ok:#166534;--okbg:#dcfce7;--blue:#1d4ed8;--bluebg:#dbeafe;--amber:#92400e;--amberbg:#fef3c7}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
 header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:18px 16px 20px}header h1{margin:0;font-size:23px;letter-spacing:.2px}header p{margin:5px 0 0;color:#cbd5e1;font-size:13px}
@@ -24,19 +25,19 @@ label{display:block;font-size:13px;font-weight:650;margin-top:8px}input,textarea
 </style>
 </head>
 <body>
-<header><h1>MEU TRABALHO</h1><p id="greeting">OrganizaÃ§Ã£o da jornada e operaÃ§Ã£o</p></header>
+<header><h1>MEU TRABALHO</h1><p id="greeting">Organização da jornada e operação</p></header>
 <main id="app"></main>
 <nav class="nav">
-<button onclick="go('home')" id="n-home">ðŸ <br>Hoje</button>
-<button onclick="go('escala')" id="n-escala">ðŸ“…<br>Escala</button>
-<button onclick="go('operacao')" id="n-operacao">ðŸš¢<br>OperaÃ§Ã£o</button>
-<button onclick="go('registro')" id="n-registro">ðŸ“<br>Registrar</button>
-<button onclick="go('mais')" id="n-mais">â˜°<br>Mais</button>
+<button onclick="go('home')" id="n-home">🏠<br>Hoje</button>
+<button onclick="go('escala')" id="n-escala">📅<br>Escala</button>
+<button onclick="go('operacao')" id="n-operacao">🚢<br>Operação</button>
+<button onclick="go('registro')" id="n-registro">📝<br>Registrar</button>
+<button onclick="go('mais')" id="n-mais">☰<br>Mais</button>
 </nav>
 <script>
 const ESCALA={
 "2026-09-22":["Folga",""],"2026-09-23":["Folga",""],"2026-09-24":["Folga",""],"2026-09-25":["Folga",""],
-"2026-09-26":["Folga",""],"2026-09-27":["Folga",""],"2026-09-28":["Folga",""],"2026-09-29":["Trabalho","12:30â€“18:45"],"2026-09-30":["Trabalho","12:30â€“18:45"]
+"2026-09-26":["Folga",""],"2026-09-27":["Folga",""],"2026-09-28":["Folga",""],"2026-09-29":["Trabalho","12:30–18:45"],"2026-09-30":["Trabalho","12:30–18:45"]
 };
 let page="home", calendarDate=new Date();
 const $=id=>document.getElementById(id);
@@ -46,7 +47,7 @@ function greeting(){const h=new Date().getHours();return h<12?"Bom dia, Paulo.":
 function go(p){page=p;render()}
 function registros(){return JSON.parse(localStorage.getItem("meu_trabalho_registros")||"[]")}
 function saveRegs(r){localStorage.setItem("meu_trabalho_registros",JSON.stringify(r))}
-function nextWork(){const d=today();const k=Object.keys(ESCALA).sort().find(x=>x>=d&&ESCALA[x][0]==="Trabalho");return k?fmt(k)+" â€¢ "+ESCALA[k][1]:"Nenhum prÃ³ximo trabalho cadastrado"}
+function nextWork(){const d=today();const k=Object.keys(ESCALA).sort().find(x=>x>=d&&ESCALA[x][0]==="Trabalho");return k?fmt(k)+" • "+ESCALA[k][1]:"Nenhum próximo trabalho cadastrado"}
 function nav(){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));const id=page==="operacao"?"n-operacao":page==="mais"?"n-mais":"n-"+page;$(id)?.classList.add("active")}
 function calendarHTML(){
  const y=calendarDate.getFullYear(),m=calendarDate.getMonth();
@@ -65,42 +66,42 @@ function render(){
  const a=$("app");
  if(page==="home"){
   const d=today(),e=ESCALA[d],r=registros();
-  a.innerHTML='<div class="card hero"><div class="top"><div><div class="muted">'+fmt(d)+'</div><div class="big">'+(e?e[0]:"Escala nÃ£o cadastrada")+'</div><div>'+(e&&e[1]?e[1]:"Consulte a escala oficial")+'</div></div><span class="tag '+(e&&e[0]==="Trabalho"?"ok":"")+'">'+(e&&e[0]==="Trabalho"?"JORNADA":"FOLGA")+'</span></div></div>'+
-  '<div class="card"><h2>PrÃ³xima jornada</h2><b>'+nextWork()+'</b></div>'+
+  a.innerHTML='<div class="card hero"><div class="top"><div><div class="muted">'+fmt(d)+'</div><div class="big">'+(e?e[0]:"Escala não cadastrada")+'</div><div>'+(e&&e[1]?e[1]:"Consulte a escala oficial")+'</div></div><span class="tag '+(e&&e[0]==="Trabalho"?"ok":"")+'">'+(e&&e[0]==="Trabalho"?"JORNADA":"FOLGA")+'</span></div></div>'+
+  '<div class="card"><h2>Próxima jornada</h2><b>'+nextWork()+'</b></div>'+
   '<div class="card"><div class="grid"><div class="stat"><div class="muted small">Registros</div><b>'+r.length+'</b></div><div class="stat"><div class="muted small">Conta</div><b>Administrador</b></div></div></div>'+
-  '<div class="card"><h2>Acessos rÃ¡pidos</h2><div class="actions"><button onclick="go(\'operacao\')">ðŸš¢ OperaÃ§Ã£o</button><button class="secondary" onclick="go(\'registro\')">ðŸ“ Registrar</button><button class="outline" onclick="go(\'escala\')">ðŸ“… Escala</button><button class="outline" onclick="go(\'mais\')">ðŸ“Š Resumo</button></div></div>'+
-  '<div class="card"><h2>ðŸŒ¦ï¸ PrevisÃ£o do tempo</h2><div class="top"><div><b>Baixada Santista</b><div class="muted small">CondiÃ§Ãµes meteorolÃ³gicas</div></div><span class="tag blue">Consulta</span></div><a class="link" style="margin-top:10px" href="https://www.climatempo.com.br/previsao-do-tempo/cidade/544/santos-sp" target="_blank" rel="noopener">Abrir previsÃ£o completa</a></div>';
+  '<div class="card"><h2>Acessos rápidos</h2><div class="actions"><button onclick="go(\'operacao\')">🚢 Operação</button><button class="secondary" onclick="go(\'registro\')">📝 Registrar</button><button class="outline" onclick="go(\'escala\')">📅 Escala</button><button class="outline" onclick="go(\'mais\')">📊 Resumo</button></div></div>'+
+  '<div class="card"><h2>🌦️ Previsão do tempo</h2><div class="top"><div><b>Baixada Santista</b><div class="muted small">Condições meteorológicas</div></div><span class="tag blue">Consulta</span></div><a class="link" style="margin-top:10px" href="https://www.climatempo.com.br/previsao-do-tempo/cidade/544/santos-sp" target="_blank" rel="noopener">Abrir previsão completa</a></div>';
  }
  if(page==="escala"){
   const y=calendarDate.getFullYear(),m=calendarDate.getMonth();
-  a.innerHTML='<div class="card"><div class="monthnav"><button onclick="changeMonth(-1)">â€¹</button><div><h2 style="margin:0;text-align:center">'+new Date(y,m,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"})+'</h2><div class="muted small" style="text-align:center">Escala do sistema</div></div><button onclick="changeMonth(1)">â€º</button></div>'+calendarHTML()+'</div>'+
-  '<div class="card"><div class="notice">A escala oficial/PDF serÃ¡ a fonte administrativa. A ediÃ§Ã£o e substituiÃ§Ã£o da escala ficam restritas ao administrador.</div></div>';
+  a.innerHTML='<div class="card"><div class="monthnav"><button onclick="changeMonth(-1)">‹</button><div><h2 style="margin:0;text-align:center">'+new Date(y,m,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"})+'</h2><div class="muted small" style="text-align:center">Escala do sistema</div></div><button onclick="changeMonth(1)">›</button></div>'+calendarHTML()+'</div>'+
+  '<div class="card"><div class="notice">A escala oficial/PDF será a fonte administrativa. A edição e substituição da escala ficam restritas ao administrador.</div></div>';
  }
  if(page==="operacao"){
-  a.innerHTML='<div class="card hero"><h2>ðŸš¢ OperaÃ§Ãµes em tempo real</h2><p class="muted">Central para acompanhar informaÃ§Ãµes operacionais disponÃ­veis nos portais autorizados.</p><div class="list"><div class="item"><b>Escala de Navios</b><span class="small muted">Embraport / DP World</span><a class="link" style="margin-top:9px" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">Abrir escala</a></div><div class="item"><b>âš“ Praticagem</b><span class="small muted">Santos Pilots</span><a class="link" style="margin-top:9px" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">Abrir praticagem</a></div></div><div class="notice" style="margin-top:11px">O sistema nÃ£o armazena senhas. InformaÃ§Ãµes em tempo real dependem da disponibilidade dos portais externos.</div></div>'+
-  '<div class="card"><h2>ðŸ”— Acessos operacionais</h2><a class="link" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">ðŸš¢ Escala de Navios</a><a class="link secondary" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">âš“ Praticagem</a><a class="link secondary" href="https://dpworld.sistemaescudo.edutivo.com.br/lms/" target="_blank" rel="noopener">ðŸŽ“ Treinamentos</a></div>';
+  a.innerHTML='<div class="card hero"><h2>🚢 Operações em tempo real</h2><p class="muted">Central para acompanhar informações operacionais disponíveis nos portais autorizados.</p><div class="list"><div class="item"><b>Escala de Navios</b><span class="small muted">Embraport / DP World</span><a class="link" style="margin-top:9px" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">Abrir escala</a></div><div class="item"><b>⚓ Praticagem</b><span class="small muted">Santos Pilots</span><a class="link" style="margin-top:9px" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">Abrir praticagem</a></div></div><div class="notice" style="margin-top:11px">O sistema não armazena senhas. Informações em tempo real dependem da disponibilidade dos portais externos.</div></div>'+
+  '<div class="card"><h2>🔗 Acessos operacionais</h2><a class="link" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">🚢 Escala de Navios</a><a class="link secondary" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">⚓ Praticagem</a><a class="link secondary" href="https://dpworld.sistemaescudo.edutivo.com.br/lms/" target="_blank" rel="noopener">🎓 Treinamentos</a></div>';
  }
  if(page==="registro"){
-  a.innerHTML='<div class="card"><h2>ðŸ“ Registrar turno</h2><label>Data<input id="rdata" type="date" value="'+today()+'"></label><label>Navio<input id="rnavio" placeholder="Nome do navio"></label><label>Equipamento<input id="requip" placeholder="Equipamento"></label><label>Turno<input id="rturno" placeholder="HorÃ¡rio do turno"></label><label>OcorrÃªncia<textarea id="roco" placeholder="Descreva se houver"></textarea></label><label>ObservaÃ§Ãµes<textarea id="robs" placeholder="AnotaÃ§Ãµes"></textarea></label><button onclick="save()">Salvar registro</button></div>';
+  a.innerHTML='<div class="card"><h2>📝 Registrar turno</h2><label>Data<input id="rdata" type="date" value="'+today()+'"></label><label>Navio<input id="rnavio" placeholder="Nome do navio"></label><label>Equipamento<input id="requip" placeholder="Equipamento"></label><label>Turno<input id="rturno" placeholder="Horário do turno"></label><label>Ocorrência<textarea id="roco" placeholder="Descreva se houver"></textarea></label><label>Observações<textarea id="robs" placeholder="Anotações"></textarea></label><button onclick="save()">Salvar registro</button></div>';
  }
  if(page==="mais"){
   const r=registros();
-  a.innerHTML='<div class="card"><h2>ðŸ“Š Resumo</h2><div class="grid"><div class="stat"><div class="muted small">Registros</div><b>'+r.length+'</b></div><div class="stat"><div class="muted small">Perfil</div><b>Administrador</b></div></div></div>'+
-  '<div class="section-title">Sistema</div><div class="card"><div class="row"><span>ðŸ“š HistÃ³rico</span><button onclick="go(\'historico\')">Abrir</button></div><div class="row"><span>ðŸ“„ Documentos / PDFs</span><button onclick="go(\'documentos\')">Abrir</button></div><div class="row"><span>ðŸŽ“ Treinamentos</span><a class="link" style="width:auto" href="https://dpworld.sistemaescudo.edutivo.com.br/lms/" target="_blank" rel="noopener">Abrir</a></div></div>'+
-  '<div class="card"><h2>ðŸ‘‘ AdministraÃ§Ã£o</h2><div class="notice">Ãrea administrativa. Na prÃ³xima etapa, login individual, banco de dados e permissÃµes reais substituirÃ£o esta demonstraÃ§Ã£o local.</div><button style="margin-top:10px" onclick="adminDemo()">ðŸ” Acessar administraÃ§Ã£o</button></div>';
+  a.innerHTML='<div class="card"><h2>📊 Resumo</h2><div class="grid"><div class="stat"><div class="muted small">Registros</div><b>'+r.length+'</b></div><div class="stat"><div class="muted small">Perfil</div><b>Administrador</b></div></div></div>'+
+  '<div class="section-title">Sistema</div><div class="card"><div class="row"><span>📚 Histórico</span><button onclick="go(\'historico\')">Abrir</button></div><div class="row"><span>📄 Documentos / PDFs</span><button onclick="go(\'documentos\')">Abrir</button></div><div class="row"><span>🎓 Treinamentos</span><a class="link" style="width:auto" href="https://dpworld.sistemaescudo.edutivo.com.br/lms/" target="_blank" rel="noopener">Abrir</a></div></div>'+
+  '<div class="card"><h2>👑 Administração</h2><div class="notice">Área administrativa. Na próxima etapa, login individual, banco de dados e permissões reais substituirão esta demonstração local.</div><button style="margin-top:10px" onclick="adminDemo()">🔐 Acessar administração</button></div>';
  }
  if(page==="historico"){
   const r=registros().slice().reverse();
-  a.innerHTML='<div class="card"><div class="top"><h2>ðŸ“š HistÃ³rico</h2><span class="tag">'+r.length+'</span></div>'+(r.length?r.map((x,i)=>'<div class="row"><div><b>'+x.data+' â€¢ '+(x.navio||"Sem navio")+'</b><br><span class="muted small">'+(x.equipamento||"Sem equipamento")+(x.turno?" â€¢ "+x.turno:"")+'</span>'+(x.ocorrencia?"<br>"+x.ocorrencia:"")+(x.obs?"<br><span class="muted small">'+x.obs+"</span>":"")+'</div><button class="danger" onclick="del('+i+')">Excluir</button></div>').join(""):'<div class="empty">Nenhum registro ainda.</div>')+'</div>';
+  a.innerHTML='<div class="card"><div class="top"><h2>📚 Histórico</h2><span class="tag">'+r.length+'</span></div>'+(r.length?r.map((x,i)=>'<div class="row"><div><b>'+x.data+' • '+(x.navio||"Sem navio")+'</b><br><span class="muted small">'+(x.equipamento||"Sem equipamento")+(x.turno?" • "+x.turno:"")+'</span>'+(x.ocorrencia?"<br>"+x.ocorrencia:"")+(x.obs?"<br><span class="muted small">'+x.obs+"</span>":"")+'</div><button class="danger" onclick="del('+i+')">Excluir</button></div>').join(""):'<div class="empty">Nenhum registro ainda.</div>')+'</div>';
  }
  if(page==="documentos"){
-  a.innerHTML='<div class="card"><h2>ðŸ“„ Documentos e PDFs</h2><div class="list"><div class="item"><b>Escala Celulose 6h â€” 2026</b><span class="small muted">Documento oficial</span></div><div class="item"><b>HorÃ¡rios de Ã´nibus</b><span class="small muted">Documento operacional</span></div><div class="item"><b>HorÃ¡rios de embarcaÃ§Ãµes</b><span class="small muted">Documento operacional</span></div></div><div class="notice" style="margin-top:11px">A gestÃ£o e substituiÃ§Ã£o dos documentos ficarÃ¡ disponÃ­vel somente para o administrador.</div></div>';
+  a.innerHTML='<div class="card"><h2>📄 Documentos e PDFs</h2><div class="list"><div class="item"><b>Escala Celulose 6h — 2026</b><span class="small muted">Documento oficial</span></div><div class="item"><b>Horários de ônibus</b><span class="small muted">Documento operacional</span></div><div class="item"><b>Horários de embarcações</b><span class="small muted">Documento operacional</span></div></div><div class="notice" style="margin-top:11px">A gestão e substituição dos documentos ficará disponível somente para o administrador.</div></div>';
  }
 }
 function changeMonth(delta){calendarDate.setMonth(calendarDate.getMonth()+delta);render()}
 function save(){const x={data:$("rdata").value,navio:$("rnavio").value.trim(),equipamento:$("requip").value.trim(),turno:$("rturno").value.trim(),ocorrencia:$("roco").value.trim(),obs:$("robs").value.trim(),criado:new Date().toISOString()};const r=registros();r.push(x);saveRegs(r);go("historico")}
 function del(i){const r=registros().slice().reverse();r.splice(i,1);saveRegs(r.reverse());render()}
-function adminDemo(){alert("AdministraÃ§Ã£o: a prÃ³xima etapa serÃ¡ login individual + banco de dados + permissÃµes reais.")}
+function adminDemo(){alert("Administração: a próxima etapa será login individual + banco de dados + permissões reais.")}
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
 render();
 </script>
