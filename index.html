@@ -2,108 +2,164 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
-<meta name="description" content="MEU TRABALHO — jornada, operação e gestão">
-<link rel="manifest" href="manifest.webmanifest?v=8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="MEU TRABALHO — organização da jornada e painel operacional">
 <title>MEU TRABALHO</title>
 <style>
-html,body,button,input,select,textarea{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-:root{--bg:#f4f6f8;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--nav:#0f172a;--ok:#166534;--okbg:#dcfce7;--blue:#1d4ed8;--bluebg:#dbeafe;--amber:#92400e;--amberbg:#fef3c7}
-*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
-header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:18px 16px 20px}header h1{margin:0;font-size:23px;letter-spacing:.2px}header p{margin:5px 0 0;color:#cbd5e1;font-size:13px}
-main{max-width:760px;margin:auto;padding:14px 14px 96px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}.hero{background:linear-gradient(135deg,#fff,#eef2ff)}
-h2{font-size:17px;margin:0 0 11px}.big{font-size:30px;font-weight:850;line-height:1.05}.muted{color:var(--muted)}.small{font-size:12px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.tag{display:inline-block;border-radius:999px;padding:5px 9px;font-size:12px;background:#e2e8f0;color:#334155}.ok{background:var(--okbg);color:var(--ok)}.blue{background:var(--bluebg);color:var(--blue)}.amber{background:var(--amberbg);color:var(--amber)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fafc}.stat b{font-size:20px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}button,.link{width:100%;min-height:44px;border:0;border-radius:12px;padding:11px;background:var(--nav);color:#fff;font:inherit;text-align:center;text-decoration:none;display:block;cursor:pointer}.secondary{background:#e2e8f0;color:var(--ink)}.outline{background:#fff;color:var(--ink);border:1px solid var(--line)}.danger{background:#fee2e2;color:#991b1b}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));z-index:20}.nav button{margin:0;padding:8px 2px;background:transparent;color:#475569;font-size:11px;min-height:48px}.nav button.active{background:var(--nav);color:#fff}
-label{display:block;font-size:13px;font-weight:650;margin-top:8px}input,textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;margin:5px 0 8px;font:inherit;background:#fff}textarea{min-height:78px;resize:vertical}.empty{text-align:center;padding:20px;color:var(--muted)}
-.list{display:grid;gap:9px}.item{border:1px solid var(--line);border-radius:14px;padding:13px}.item b{display:block;margin-bottom:3px}
-.section-title{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800;margin:18px 2px 7px}
-.notice{padding:11px 12px;border-radius:12px;background:#f8fafc;border:1px dashed #cbd5e1;font-size:12px;color:#475569}
-.monthnav{display:flex;align-items:center;justify-content:space-between;gap:8px}.monthnav button{width:44px;padding:8px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dayhead{text-align:center;font-size:10px;color:var(--muted);font-weight:700;padding:5px}.day{min-height:48px;border:1px solid var(--line);border-radius:9px;padding:6px;font-size:12px;background:#fff}.day.work{background:var(--okbg);border-color:#bbf7d0}.day.off{background:#f8fafc}.day.today{outline:2px solid #1d4ed8}.day b{display:block}.mini{font-size:9px;color:var(--muted);margin-top:3px}
+:root{
+  --navy:#111827;
+  --blue:#2857d9;
+  --bg:#f3f4f6;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh;padding-bottom:86px}
+header{background:var(--navy);color:#fff;padding:28px 24px 24px}
+header h1{margin:0;font-size:31px;line-height:1.1;font-weight:800}
+header p{margin:10px 0 0;color:#cbd5e1;font-size:17px}
+main{max-width:760px;margin:0 auto;padding:20px 22px}
+.card{background:var(--card);border-radius:25px;margin-bottom:18px;padding:25px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.hero{background:var(--navy);color:#fff;padding:25px;border-radius:25px;margin-bottom:18px}
+.date{font-size:18px;color:#d1d5db;margin-bottom:12px}
+.hero h2{font-size:34px;margin:0 0 10px;line-height:1.05}
+.hero .shift{font-size:35px;font-weight:800;line-height:1.1;margin-bottom:12px}
+.hero p{font-size:20px;line-height:1.25;margin:0}
+.card h3{font-size:25px;margin:0 0 18px}
+.weather-box{background:#eef5ff;border:1px solid #d8e5fa;border-radius:22px;padding:20px;display:flex;gap:20px;align-items:center}
+.weather-icon{font-size:54px;flex:0 0 58px;text-align:center}
+.temp{font-size:44px;font-weight:800;line-height:1}
+.condition{font-size:23px;font-weight:700;margin-top:5px}
+.details{font-size:18px;color:#4b5563;line-height:1.35}
+.source{color:#6b7280;font-size:16px;margin:12px 3px 16px}
+.btn{display:block;width:100%;border:0;border-radius:19px;padding:18px 16px;font-size:20px;text-decoration:none;text-align:center;cursor:pointer;margin-top:10px}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-secondary{background:#e5e7eb;color:#111827}
+.scale-card p{font-size:18px;color:#6b7280;line-height:1.35;margin:0 0 18px}
+.nav{position:fixed;z-index:10;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -2px 10px rgba(0,0,0,.04)}
+.nav button{border:0;background:transparent;color:#6b7280;font-size:14px;padding:10px 3px;border-radius:17px;cursor:pointer}
+.nav button.active{background:var(--navy);color:#fff}
+.nav .ico{display:block;font-size:22px;line-height:1;margin-bottom:5px}
+.view{display:none}
+.view.active{display:block}
+.simple h2{font-size:28px;margin-top:0}
+.simple p{font-size:18px;color:var(--muted);line-height:1.45}
+@media(max-width:430px){
+  header{padding:27px 24px 23px}
+  header h1{font-size:29px}
+  main{padding:19px 22px}
+  .hero h2{font-size:31px}
+  .hero .shift{font-size:34px}
+  .weather-box{padding:17px;gap:14px}
+  .weather-icon{font-size:44px;flex-basis:48px}
+  .temp{font-size:39px}
+  .condition{font-size:20px}
+  .details{font-size:16px}
+}
 </style>
 </head>
 <body>
-<header><h1>MEU TRABALHO</h1><p id="greeting">Organização da jornada e operação</p></header>
-<main id="app"></main>
+
+<header>
+  <h1>MEU TRABALHO</h1>
+  <p>Organização da jornada e painel operacional</p>
+</header>
+
+<main>
+  <section id="hoje" class="view active">
+    <div class="hero">
+      <div class="date" id="date"></div>
+      <h2 id="greeting">Olá, boa noite!</h2>
+      <div class="shift">00:30 - 06:45</div>
+      <p>Seu turno de hoje está conforme a escala cadastrada.</p>
+    </div>
+
+    <div class="card">
+      <h3>🌦️ Previsão do tempo</h3>
+      <div class="weather-box">
+        <div class="weather-icon">🌦️</div>
+        <div>
+          <div class="temp">20°C</div>
+          <div class="condition">Pancadas</div>
+          <div class="details">Máx. 24° · mín. 20° · chuva 100%<br>Umidade 97% · vento 7 km/h</div>
+        </div>
+      </div>
+      <div class="source">Fonte: Open-Meteo · previsão para Santos/SP</div>
+      <a class="btn btn-secondary" href="https://www.climatempo.com.br/previsao-do-tempo/cidade/544/santos-sp" target="_blank" rel="noopener">Ver previsão completa</a>
+    </div>
+
+    <div class="card scale-card">
+      <h3>📄 Escala oficial</h3>
+      <p>Consulte a tabela oficial completa de 2026 em PDF.</p>
+      <button class="btn btn-primary" onclick="alert('O PDF da escala será conectado nesta etapa.')">👁️ Visualizar escala em PDF</button>
+      <button class="btn btn-secondary" onclick="alert('O arquivo da escala será conectado nesta etapa.')">⬇️ Baixar escala</button>
+    </div>
+  </section>
+
+  <section id="escala" class="view simple">
+    <div class="card">
+      <h2>📅 Escala</h2>
+      <p>Aqui ficará a escala oficial completa, com consulta por mês e turno.</p>
+      <button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+    </div>
+  </section>
+
+  <section id="painel" class="view simple">
+    <div class="card">
+      <h2>🚢 Painel operacional</h2>
+      <p>Área reservada para as informações operacionais, navios e praticagem.</p>
+      <button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+    </div>
+  </section>
+
+  <section id="registrar" class="view simple">
+    <div class="card">
+      <h2>📝 Registrar</h2>
+      <p>Área reservada para registro de turno, ocorrências e observações.</p>
+      <button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+    </div>
+  </section>
+
+  <section id="mais" class="view simple">
+    <div class="card">
+      <h2>☰ Mais</h2>
+      <p>Área reservada para documentos, treinamentos e configurações.</p>
+      <button class="btn btn-primary" onclick="go('hoje')">Voltar para Hoje</button>
+    </div>
+  </section>
+</main>
+
 <nav class="nav">
-<button onclick="go('home')" id="n-home">🏠<br>Hoje</button>
-<button onclick="go('escala')" id="n-escala">📅<br>Escala</button>
-<button onclick="go('operacao')" id="n-operacao">🚢<br>Operação</button>
-<button onclick="go('registro')" id="n-registro">📝<br>Registrar</button>
-<button onclick="go('mais')" id="n-mais">☰<br>Mais</button>
+  <button class="active" data-view="hoje" onclick="go('hoje',this)"><span class="ico">🏠</span>Hoje</button>
+  <button data-view="escala" onclick="go('escala',this)"><span class="ico">📅</span>Escala</button>
+  <button data-view="painel" onclick="go('painel',this)"><span class="ico">🚢</span>Painel</button>
+  <button data-view="registrar" onclick="go('registrar',this)"><span class="ico">📝</span>Registrar</button>
+  <button data-view="mais" onclick="go('mais',this)"><span class="ico">☰</span>Mais</button>
 </nav>
+
 <script>
-const ESCALA={
-"2026-09-22":["Folga",""],"2026-09-23":["Folga",""],"2026-09-24":["Folga",""],"2026-09-25":["Folga",""],
-"2026-09-26":["Folga",""],"2026-09-27":["Folga",""],"2026-09-28":["Folga",""],"2026-09-29":["Trabalho","12:30–18:45"],"2026-09-30":["Trabalho","12:30–18:45"]
-};
-let page="home", calendarDate=new Date();
-const $=id=>document.getElementById(id);
-function today(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
-function fmt(d){return new Date(d+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}
-function greeting(){const h=new Date().getHours();return h<12?"Bom dia, Paulo.":h<18?"Boa tarde, Paulo.":"Boa noite, Paulo."}
-function go(p){page=p;render()}
-function registros(){return JSON.parse(localStorage.getItem("meu_trabalho_registros")||"[]")}
-function saveRegs(r){localStorage.setItem("meu_trabalho_registros",JSON.stringify(r))}
-function nextWork(){const d=today();const k=Object.keys(ESCALA).sort().find(x=>x>=d&&ESCALA[x][0]==="Trabalho");return k?fmt(k)+" • "+ESCALA[k][1]:"Nenhum próximo trabalho cadastrado"}
-function nav(){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));const id=page==="operacao"?"n-operacao":page==="mais"?"n-mais":"n-"+page;$(id)?.classList.add("active")}
-function calendarHTML(){
- const y=calendarDate.getFullYear(),m=calendarDate.getMonth();
- const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
- let s='<div class="calendar">';
- ["D","S","T","Q","Q","S","S"].forEach(x=>s+='<div class="dayhead">'+x+'</div>');
- for(let i=0;i<first;i++)s+='<div></div>';
- for(let d=1;d<=days;d++){
-  const k=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0"),e=ESCALA[k],cl=e?(e[0]==="Trabalho"?"work":"off"):"";
-  s+='<div class="day '+cl+(k===today()?" today":"")+'"><b>'+d+'</b>'+(e?'<div class="mini">'+(e[0]==="Trabalho"?e[1]:"Folga")+'</div>':'')+'</div>';
- }
- return s+'</div>';
+function updateDate(){
+  const now=new Date();
+  const days=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+  document.getElementById('date').textContent =
+    days[now.getDay()]+', '+String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0');
+  const h=now.getHours();
+  document.getElementById('greeting').textContent =
+    h<12?'Olá, bom dia!':h<18?'Olá, boa tarde!':'Olá, boa noite!';
 }
-function render(){
- nav();$("greeting").textContent=greeting();
- const a=$("app");
- if(page==="home"){
-  const d=today(),e=ESCALA[d],r=registros();
-  a.innerHTML='<div class="card hero"><div class="top"><div><div class="muted">'+fmt(d)+'</div><div class="big">'+(e?e[0]:"Escala não cadastrada")+'</div><div>'+(e&&e[1]?e[1]:"Consulte a escala oficial")+'</div></div><span class="tag '+(e&&e[0]==="Trabalho"?"ok":"")+'">'+(e&&e[0]==="Trabalho"?"JORNADA":"FOLGA")+'</span></div></div>'+
-  '<div class="card"><h2>Próxima jornada</h2><b>'+nextWork()+'</b></div>'+
-  '<div class="card"><div class="grid"><div class="stat"><div class="muted small">Registros</div><b>'+r.length+'</b></div><div class="stat"><div class="muted small">Conta</div><b>Administrador</b></div></div></div>'+
-  '<div class="card"><h2>Acessos rápidos</h2><div class="actions"><button onclick="go(\'operacao\')">🚢 Operação</button><button class="secondary" onclick="go(\'registro\')">📝 Registrar</button><button class="outline" onclick="go(\'escala\')">📅 Escala</button><button class="outline" onclick="go(\'mais\')">📊 Resumo</button></div></div>'+
-  '<div class="card"><h2>🌦️ Previsão do tempo</h2><div class="top"><div><b>Baixada Santista</b><div class="muted small">Condições meteorológicas</div></div><span class="tag blue">Consulta</span></div><a class="link" style="margin-top:10px" href="https://www.climatempo.com.br/previsao-do-tempo/cidade/544/santos-sp" target="_blank" rel="noopener">Abrir previsão completa</a></div>';
- }
- if(page==="escala"){
-  const y=calendarDate.getFullYear(),m=calendarDate.getMonth();
-  a.innerHTML='<div class="card"><div class="monthnav"><button onclick="changeMonth(-1)">‹</button><div><h2 style="margin:0;text-align:center">'+new Date(y,m,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"})+'</h2><div class="muted small" style="text-align:center">Escala do sistema</div></div><button onclick="changeMonth(1)">›</button></div>'+calendarHTML()+'</div>'+
-  '<div class="card"><div class="notice">A escala oficial/PDF será a fonte administrativa. A edição e substituição da escala ficam restritas ao administrador.</div></div>';
- }
- if(page==="operacao"){
-  a.innerHTML='<div class="card hero"><h2>🚢 Operações em tempo real</h2><p class="muted">Central para acompanhar informações operacionais disponíveis nos portais autorizados.</p><div class="list"><div class="item"><b>Escala de Navios</b><span class="small muted">Embraport / DP World</span><a class="link" style="margin-top:9px" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">Abrir escala</a></div><div class="item"><b>⚓ Praticagem</b><span class="small muted">Santos Pilots</span><a class="link" style="margin-top:9px" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">Abrir praticagem</a></div></div><div class="notice" style="margin-top:11px">O sistema não armazena senhas. Informações em tempo real dependem da disponibilidade dos portais externos.</div></div>'+
-  '<div class="card"><h2>🔗 Acessos operacionais</h2><a class="link" href="https://www.embraportonline.com.br/Navios/Escala" target="_blank" rel="noopener">🚢 Escala de Navios</a><a class="link secondary" href="https://login.sppilots.com.br/servicos" target="_blank" rel="noopener">⚓ Praticagem</a><a class="link secondary" href="https://dpworld.sistemaescudo.edutivo.com.br/lms/" target="_blank" rel="noopener">🎓 Treinamentos</a></div>';
- }
- if(page==="registro"){
-  a.innerHTML='<div class="card"><h2>📝 Registrar turno</h2><label>Data<input id="rdata" type="date" value="'+today()+'"></label><label>Navio<input id="rnavio" placeholder="Nome do navio"></label><label>Equipamento<input id="requip" placeholder="Equipamento"></label><label>Turno<input id="rturno" placeholder="Horário do turno"></label><label>Ocorrência<textarea id="roco" placeholder="Descreva se houver"></textarea></label><label>Observações<textarea id="robs" placeholder="Anotações"></textarea></label><button onclick="save()">Salvar registro</button></div>';
- }
- if(page==="mais"){
-  const r=registros();
-  a.innerHTML='<div class="card"><h2>📊 Resumo</h2><div class="grid"><div class="stat"><div class="muted small">Registros</div><b>'+r.length+'</b></div><div class="stat"><div class="muted small">Perfil</div><b>Administrador</b></div></div></div>'+
-  '<div class="section-title">Sistema</div><div class="card"><div class="row"><span>📚 Histórico</span><button onclick="go(\'historico\')">Abrir</button></div><div class="row"><span>📄 Documentos / PDFs</span><button onclick="go(\'documentos\')">Abrir</button></div><div class="row"><span>🎓 Treinamentos</span><a class="link" style="width:auto" href="https://dpworld.sistemaescudo.edutivo.com.br/lms/" target="_blank" rel="noopener">Abrir</a></div></div>'+
-  '<div class="card"><h2>👑 Administração</h2><div class="notice">Área administrativa. Na próxima etapa, login individual, banco de dados e permissões reais substituirão esta demonstração local.</div><button style="margin-top:10px" onclick="adminDemo()">🔐 Acessar administração</button></div>';
- }
- if(page==="historico"){
-  const r=registros().slice().reverse();
-  a.innerHTML='<div class="card"><div class="top"><h2>📚 Histórico</h2><span class="tag">'+r.length+'</span></div>'+(r.length?r.map((x,i)=>'<div class="row"><div><b>'+x.data+' • '+(x.navio||"Sem navio")+'</b><br><span class="muted small">'+(x.equipamento||"Sem equipamento")+(x.turno?" • "+x.turno:"")+'</span>'+(x.ocorrencia?"<br>"+x.ocorrencia:"")+(x.obs?"<br><span class="muted small">'+x.obs+"</span>":"")+'</div><button class="danger" onclick="del('+i+')">Excluir</button></div>').join(""):'<div class="empty">Nenhum registro ainda.</div>')+'</div>';
- }
- if(page==="documentos"){
-  a.innerHTML='<div class="card"><h2>📄 Documentos e PDFs</h2><div class="list"><div class="item"><b>Escala Celulose 6h — 2026</b><span class="small muted">Documento oficial</span></div><div class="item"><b>Horários de ônibus</b><span class="small muted">Documento operacional</span></div><div class="item"><b>Horários de embarcações</b><span class="small muted">Documento operacional</span></div></div><div class="notice" style="margin-top:11px">A gestão e substituição dos documentos ficará disponível somente para o administrador.</div></div>';
- }
+function go(id,btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  const target=btn||document.querySelector('.nav button[data-view="'+id+'"]');
+  if(target) target.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-function changeMonth(delta){calendarDate.setMonth(calendarDate.getMonth()+delta);render()}
-function save(){const x={data:$("rdata").value,navio:$("rnavio").value.trim(),equipamento:$("requip").value.trim(),turno:$("rturno").value.trim(),ocorrencia:$("roco").value.trim(),obs:$("robs").value.trim(),criado:new Date().toISOString()};const r=registros();r.push(x);saveRegs(r);go("historico")}
-function del(i){const r=registros().slice().reverse();r.splice(i,1);saveRegs(r.reverse());render()}
-function adminDemo(){alert("Administração: a próxima etapa será login individual + banco de dados + permissões reais.")}
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
-render();
+updateDate();
 </script>
 </body>
 </html>
