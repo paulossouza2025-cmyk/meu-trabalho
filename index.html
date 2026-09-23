@@ -67,7 +67,7 @@ main{padding:19px 22px}
 .login-card h2{margin:0 0 8px;font-size:31px;color:#111827}
 .login-card p{margin:0 0 24px;color:#6b7280;font-size:17px}
 .login-card label{display:block;margin:14px 0 7px;font-weight:700;color:#374151}
-.login-card input{width:100%;padding:17px;border:1px solid #d1d5db;border-radius:16px;font-size:18px;outline:none}
+.login-card input,.login-card select{width:100%;padding:17px;border:1px solid #d1d5db;border-radius:16px;font-size:18px;outline:none}
 .login-card input:focus{border-color:#2857d9}
 .login-btn{width:100%;margin-top:22px;padding:18px;border:0;border-radius:18px;background:#2857d9;color:#fff;font-size:19px;font-weight:700}
 .login-error{display:none;margin-top:15px;padding:12px;border-radius:14px;background:#fee2e2;color:#991b1b;font-size:15px}
@@ -106,8 +106,28 @@ main{padding:19px 22px}
 <input id="signupEmail" type="email" autocomplete="email" placeholder="seu@email.com" required>
 <label for="signupPass">Senha</label>
 <input id="signupPass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" minlength="6" required>
-<label for="signupShift">Turno</label>
-<input id="signupShift" placeholder="Ex.: 00:30 - 06:45">
+<label for="signupTeam">Equipe</label>
+<select id="signupTeam" required>
+<option value="">Selecione a equipe</option>
+<option value="Dragão">Dragão</option>
+<option value="Escorpião">Escorpião</option>
+<option value="Falcão">Falcão</option>
+<option value="Leão">Leão</option>
+<option value="Tubarão">Tubarão</option>
+</select>
+
+<label for="signupFunction">Função</label>
+<select id="signupFunction" required>
+<option value="">Selecione a função</option>
+<option value="Auxiliar">Auxiliar</option>
+<option value="Operador 1">Operador 1</option>
+<option value="Operador 2">Operador 2</option>
+<option value="Operador 3">Operador 3</option>
+<option value="Operador 4">Operador 4</option>
+<option value="Operador 5">Operador 5</option>
+<option value="Operador de Costado">Operador de Costado</option>
+<option value="Estivador">Estivador</option>
+</select>
 <button class="login-btn" type="submit">Criar cadastro</button>
 <button class="btn btn-secondary" type="button" onclick="showLogin()">Voltar para o login</button>
 <div id="signupLoading" class="login-loading">Criando cadastro...</div>
@@ -269,8 +289,11 @@ full_name:document.getElementById('signupName').value.trim(),
 username:document.getElementById('signupUser').value.trim(),
 email:document.getElementById('signupEmail').value.trim(),
 password:document.getElementById('signupPass').value,
-turno:document.getElementById('signupShift').value.trim()
-};
+equipe:
+document.getElementById('signupTeam').value,
+
+funcao:
+document.getElementById('signupFunction').value};
 const err=document.getElementById('signupError');
 const loading=document.getElementById('signupLoading');
 const success=document.getElementById('signupSuccess');
@@ -281,7 +304,7 @@ const data=await response.json();
 if(!response.ok)throw new Error(
 data.error==='usuario_ja_existe'?'Esse usuário já está cadastrado.':
 data.error==='email_ja_cadastrado'?'Esse e-mail já está cadastrado.':
-data.error==='dados_invalidos'?'Confira os dados. O usuário deve ter 4 a 30 caracteres e a senha pelo menos 6.':
+data.error==='dados_invalidos'?'Confira os dados, selecione a equipe e a função, e use uma senha com pelo menos 6 caracteres.':
 'Não foi possível criar o cadastro.'
 );
 success.style.display='block';
