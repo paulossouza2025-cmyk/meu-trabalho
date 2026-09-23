@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#111827">
 <meta name="description" content="MEU TRABALHO — organização da jornada e painel operacional">
 <title>MEU TRABALHO</title>
-
 <style>
 :root{--navy:#111827;--blue:#2857d9;--bg:#f3f4f6;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb}
 *{box-sizing:border-box}
@@ -47,7 +46,6 @@ main{max-width:760px;margin:0 auto;padding:20px 22px}
 .admin-action span{display:block;color:#6b7280;font-size:14px;line-height:1.3}
 .admin-badge{display:inline-block;background:#e8efff;color:#2857d9;padding:7px 11px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:15px}
 .logout{margin-top:18px}
-
 @media(max-width:430px){
 header{padding:27px 24px 23px}
 header h1{font-size:29px}
@@ -64,79 +62,13 @@ main{padding:19px 22px}
 </style>
 
 <style>
-#loginScreen{
-position:fixed;
-inset:0;
-z-index:999;
-background:#111827;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:24px
-}
-
-.login-card{
-width:100%;
-max-width:430px;
-background:#fff;
-border-radius:28px;
-padding:30px;
-box-shadow:0 20px 60px rgba(0,0,0,.25)
-}
-
-.login-card h2{
-margin:0 0 8px;
-font-size:31px;
-color:#111827
-}
-
-.login-card p{
-margin:0 0 24px;
-color:#6b7280;
-font-size:17px
-}
-
-.login-card label{
-display:block;
-margin:14px 0 7px;
-font-weight:700;
-color:#374151
-}
-
-.login-card input{
-width:100%;
-padding:17px;
-border:1px solid #d1d5db;
-border-radius:16px;
-font-size:18px;
-outline:none
-}
-
-.login-card input:focus{
-border-color:#2857d9
-}
-
-.login-btn{
-width:100%;
-margin-top:22px;
-padding:18px;
-border:0;
-border-radius:18px;
-background:#2857d9;
-color:#fff;
-font-size:19px;
-font-weight:700
-}
-
-.login-error{
-display:none;
-margin-top:15px;
-padding:12px;
-border-radius:14px;
-background:#fee2e2;
-color:#991b1b;
-font-size:15px
-}
-
-.login-loading{
-display:none;
+#loginScreen{position:fixed;inset:0;z-index:999;background:#111827;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{width:100%;max-width:430px;background:#fff;border-radius:28px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.login-card h2{margin:0 0 8px;font-size:31px;color:#111827}
+.login-card p{margin:0 0 24px;color:#6b7280;font-size:17px}
+.login-card label{display:block;margin:14px 0 7px;font-weight:700;color:#374151}
+.login-card input,.login-card select{width:100%;padding:17px;border:1px solid #d1d5db;border-radius:16px;font-size:18px;outline:none;background:#fff;color:#111827}
+.login-card input:focus{border-color:#2857d9}
+.login-btn{width:100%;margin-top:22px;padding:18px;border:0;border-radius:18px;background:#2857d9;color:#fff;font-size:19px;font-weight:700}
+.login-error{display:none;margin-top:15px;padding:12px;border-radius:14px;background:#fee2e2;color:#991b1b;font-size:15px}
+.login-loading{display:none
