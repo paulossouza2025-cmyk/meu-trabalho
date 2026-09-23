@@ -61,8 +61,39 @@ main{max-width:760px;margin:0 auto;padding:20px 22px}
   .details{font-size:16px}
 }
 </style>
+
+<style>
+#loginScreen{position:fixed;inset:0;z-index:999;background:#111827;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{width:100%;max-width:430px;background:#fff;border-radius:28px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.login-card h2{margin:0 0 8px;font-size:31px;color:#111827}
+.login-card p{margin:0 0 24px;color:#6b7280;font-size:17px}
+.login-card label{display:block;margin:14px 0 7px;font-weight:700;color:#374151}
+.login-card input{width:100%;padding:17px;border:1px solid #d1d5db;border-radius:16px;font-size:18px;outline:none}
+.login-card input:focus{border-color:#2857d9}
+.login-btn{width:100%;margin-top:22px;padding:18px;border:0;border-radius:18px;background:#2857d9;color:#fff;font-size:19px;font-weight:700}
+.login-error{display:none;margin-top:15px;padding:12px;border-radius:14px;background:#fee2e2;color:#991b1b;font-size:15px}
+.login-loading{display:none;text-align:center;margin-top:12px;color:#6b7280}
+</style>
+
 </head>
 <body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <h2>MEU TRABALHO</h2>
+    <p>Acesse sua jornada e suas ferramentas de trabalho.</p>
+    <form id="loginForm">
+      <label for="loginUser">Usuário</label>
+      <input id="loginUser" autocomplete="username" placeholder="Digite seu usuário" required>
+      <label for="loginPass">Senha</label>
+      <input id="loginPass" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+      <button class="login-btn" type="submit">Entrar</button>
+      <div id="loginLoading" class="login-loading">Entrando...</div>
+      <div id="loginError" class="login-error"></div>
+    </form>
+  </div>
+</div>
+
 
 <header>
   <h1>MEU TRABALHO</h1>
@@ -161,5 +192,47 @@ function go(id,btn){
 }
 updateDate();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://pgvicndflunzrlzwtlog.supabase.co";
+const SUPABASE_KEY = "sb_publishable_D6TBgj3rx5sERs4kSNT9EQ_xHx0tXu8";
+const LOGIN_URL = "https://pgvicndflunzrlzwtlog.supabase.co/functions/v1/login";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function showLogin(){
+  document.getElementById('loginScreen').style.display='flex';
+}
+function hideLogin(){
+  document.getElementById('loginScreen').style.display='none';
+}
+async function initAuth(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session) hideLogin(); else showLogin();
+}
+document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const user=document.getElementById('loginUser').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  const err=document.getElementById('loginError');
+  const loading=document.getElementById('loginLoading');
+  err.style.display='none'; loading.style.display='block';
+  try{
+    const response=await fetch(LOGIN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:user,password:pass})});
+    const data=await response.json();
+    if(!response.ok || !data.session) throw new Error('Usuário ou senha inválidos.');
+    await sb.auth.setSession(data.session);
+    hideLogin();
+  }catch(ex){
+    err.textContent=ex.message||'Não foi possível entrar.';
+    err.style.display='block';
+  }finally{loading.style.display='none';}
+});
+sb.auth.onAuthStateChange((_event,session)=>{
+  if(session) hideLogin(); else showLogin();
+});
+initAuth();
+</script>
+
 </body>
 </html>
